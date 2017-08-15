@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{% if poems %}
+		{{ poems.title|title }} By
+		{% if poems.poet %}
+				{% if poems.poet %}
+					{% if poems.poet.get_full_name %}
+						{{ poems.poet.get_full_name }}
+					{% else %}
+						{{ poems.poet }}
+					{% endif %}
+				{% else %}
+					Anonymous
+				{% endif %}
+		{% endif %}
+	{% endif %}
+	
+	{% if stories %}
+		{{ stories.title|title }} By
+		{% if stories.author %}
+			{% if stories.author.get_full_name %}
+				{{stories.author.get_full_name}}
+			{% else %}
+				{{stories.author}}
+			{% endif %}
+		{% else %}
+			Anonymous
+		{% endif %}
+	{% endif %}
+
+	{% if riddles %}
+		{{ riddles.title|title }} By
+		{% if riddles.riddler %}
+			{% if riddles.riddler.get_full_name %}
+				{{ riddles.riddler.get_full_name }}
+			{% else %}
+				{{ riddles.riddler }}
+			{% endif %}
+		{% else %}
+			<p>Anonymous</p>
+		{% endif %}
+	{% endif %}
+	
+ 	| {{name}} | {{ block.super }}
+{% endblock %}
+
+
+{% block head_extra %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$("#p_answer").hide();
+			$("#p_hint").hide();
+			$("#button_answer").click(function(){
+				$("#p_answer").toggle(100);
+			});
+			$("#button_hint").click(function(){
+				$("#p_hint").toggle(100);
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content_body %}
+
+
+<div style="margin-top: 100px" class="row"></div>
+<div class="row">
+	<div class="col-lg-12">
+		{% if poems %}
+			<h1 class="page-header"> {{ poems.title|title }}
+				{% if poems.poet %}<br>
+					<small>By
+						{% if poems.poet %}
+							{% if poems.poet.get_full_name %}
+								<a href="">{{ poems.poet.get_full_name }}</a>
+							{% else %}
+								<a href="">{{ poems.poet }}</a>
+							{% endif %}
+						{% else %}
+							<p>Anonymous</p>
+						{% endif %}
+					</small>
+				{% endif %}
+					<small class="pull-right" style="color: #BCAC9B; font-size: 0.5em">
+						uploaded : {{poems.timestamp|timesince}} age
+					</small>
+
+			</h1>
+		{% endif %}
+
+		{% if stories %}
+			<h1 class="page-header"> {{ stories.title|title }}
+				<small>
+					<br>By
+					{% if stories.author %}
+						{% if stories.author.get_full_name %}
+							<a href="">{{stories.author.get_full_name}}</a>
+						{% else %}
+							<a href="">{{stories.author}}</a>
+						{% endif %}
+					{% else %}
+						Anonymous
+					{% endif %}
+				</small>
+				<small class="pull-right" style="color: #BCAC9B; font-size: 0.5em">	Uploaded : {{stories.timestamp|timesince}} age
+				</small>
+
+			</h1>
+		{% endif %}
+
+		{% if riddles %}
+			<h1 class="page-header"> {{ riddles.title|title }}
+				{% if riddles.riddler %}<br>
+					<small>By
+						{% if riddles.riddler %}
+							{% if riddles.riddler.get_full_name %}
+								<a href="">{{ riddles.riddler.get_full_name }}</a>
+							{% else %}
+								<a href="">{{ riddles.riddler }}</a>
+							{% endif %}
+						{% else %}
+							<p>Anonymous</p>
+						{% endif %}
+					</small>
+				{% endif %}
+					<small class="pull-right" style="color: #BCAC9B; font-size: 0.5em">Uploaded : {{riddles.timestamp}}</small>
+
+			</h1>
+		{% endif %}
+
+		<ol class="breadcrumb">
+			<li>
+				<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage</a>
+			</li>
+			{% if poems %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:poem_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{poems.title|truncatewords:5}}
+				</li>
+			{% endif %}
+			{% if stories %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:story_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{stories.title|truncatewords:5}}
+				</li>
+			{% endif %}
+			{% if riddles %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:riddle_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{riddles.title|truncatewords:5}}
+				</li>
+			{% endif %}
+		</ol>
+	</div>
+</div>
+	
+	{% if authors %}
+		<!-- COMPLETE DETAIL OF AUTHOR -->
+		<h4>{{ authors.first_name }} {{ authors.last_name }}</h4>
+	{% endif %}
+
+	{% if poems %}
+		<div class="container col-lg-12">
+			<div class="panel panel-success">
+				<div class="panel-heading">
+					<h4>
+						{{ poems.title }}
+					</h4>
+				</div>
+				<div class="panel-body" style="text-align: center;">
+					{{ poems.poem|linebreaksbr }}
+				</div>
+				{% if poems.poet %}
+					<div class="panel-footer panel-success">
+						<small> Author :
+							{% for name in poems.poet.all %}
+								<a href="">
+									{% if name.user_name.get_full_name %}
+										{{ name.user_name.get_full_name }}
+									{% else %}
+										{{ name.user_name }}
+									{% endif %}
+								</a>
+							{% endfor %}
+						</small>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<br>
+		<hr>
+	{% endif %}
+
+	{% if stories %}
+		<div class="container col-lg-12">
+			<div class=" col-lg-12">
+				<h4 class="pull-left">{{ stories.title|title }}.</h4>
+				<br>
+				<br>
+				<p class="lead">{{ stories.story|linebreaksbr }}</p>
+			</div>
+		</div>
+		<br>
+		<hr>
+	{% endif %}
+
+	{% if riddles %}
+		<div class="container col-lg-12">
+			<div class="well well-lg col-lg-12" style="text-align: center;">
+				
+				<br>
+				<p>{{ riddles.riddle|linebreaksbr }}</p>
+				<br>
+			</div>
+			<p class="lead">Answer and Hint</p>
+			<div class="well col-lg-6">
+				<a class="btn btn-default" id="button_answer">Show Answer</a>
+				<p id="p_answer"><br><b>Correct Answer:</b><br><br>{{riddles.answer}}<br></p>
+			</div>
+			<div class="well col-lg-6">
+				<a class="btn btn-warning" id="button_hint">Show Hint</a>
+				<p id="p_hint"><br><b>Your Hint:</b><br><br>{{riddles.explanation}}<br></p>
+			</div>
+		</div>
+		<br>
+		<hr>
+	{% endif %}
+
+
+	{% if authors %}
+		
+		This page is still under development. Please continue with surfing the site.
+
+		{% else %}
+		<!-- The comment and like section, Common to all the content -->
+		
+		<hr><br>
+		<p>Hey!. how did you like this {{name_nav}}? Comment below you feedback, or if you have a doubt, feel free to ask.</p>
+		<div class="fb-like" data-href="{{request.build_absolute_uri}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+		<br>	
+		
+		<div class="fb-comments" data-href="{{request.build_absolute_uri}}" data-width="100%" data-numposts="10"></div>
+
+
+	{% if stories.related_story %}
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"> Related Stories </h1>
+				{% for story in stories.related_story.all %}
+					<h3>{{story.title}}</h3>
+					<p>{{story.story|truncatewords:20}}  <a href="{{story.get_absolute_url}}"> Read More</a></p>
+					<hr>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	<div class="row">
+		<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li>
+				<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage</a>
+			</li>
+			{% if poems %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:poem_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{poems.title|truncatewords:5}}
+				</li>
+			{% endif %}
+			{% if stories %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:story_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{stories.title|truncatewords:5}}
+				</li>
+			{% endif %}
+			{% if riddles %}
+				<li class="">
+					<i class="fa fa-edit"></i><a href="{% url 'writer:riddle_list' %}"> {{breadcrumb_text_0}} </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{riddles.title|truncatewords:5}}
+				</li>
+			{% endif %}
+		</ol>	
+		</div>
+	</div>
+
+	{% endif %}
+{% endblock %}
+
+{% block custom_javascript %}
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+{% endblock %}

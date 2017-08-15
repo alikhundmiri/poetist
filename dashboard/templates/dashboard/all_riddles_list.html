@@ -1,0 +1,239 @@
+
+{% extends 'dashboard/dashboard_base.html' %}
+{% load staticfiles %}
+<head>
+{% block title %}
+    Your Riddles | Dashboard | Ritrew - Poem, Story, and Riddle.
+{% endblock %}
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock d_nav_bar %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header pull-right" >
+                        <a href="{% url 'dashboard:new_riddle' %}" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                        <a href="{% url 'writer:riddle_list' %}" type="button" class="btn btn-info"><i class="fa fa-eye"></i> Visit Page</a>
+                        <!-- For creating a new instance. Custom for all types of forms. -->
+                        </h1>
+                        <h1 class="page-header">
+                            {{ content_name }}
+                            <small>{{ content_name_detail }}</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard:list' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-file"></i> {{ content_name }}
+                            </li>
+                        </ol>
+                    </div>
+
+<!-- ########### R I D D L E S    P A G E    S U M M A R Y    ################## -->
+                    {% if name == 'd_a_riddle' %}
+                        <div class="col-lg-11">
+                            <div class="jumbotron">
+                                <h3>Report</h3>
+                                {% if riddles.count < 1 %}
+                                    <p>Looks like you have not yet published any Riddles,<br> Heres, a Guide for you to get started.<br></p>
+                                    <ol>
+                                        <li>Click on Add new button on the top right corner of this page.</li>
+                                        <li>Write your Title, Riddle, Answer and Hint in the appropriate blanks on the new pages that opens up.</li>
+                                        <li>Select "Show Riddle" in the last line.</li>
+                                        <li>Click on "Publish New Riddle".</li>
+                                        <li>???</li>
+                                        <li>Profit.</li>
+                                    </ol>
+                                {% else %}
+                                    <p>You have written a total of 
+                                    <b>{{riddles|length}}</b> 
+                                    riddle{{riddles|pluralize}} since dd-mm-yy, of which 
+                                    <b>
+                                        {% if riddle_published|length == riddles|length %}
+                                            all 
+                                        {% else %}
+                                            {{riddle_published|length}}
+                                        {% endif %}
+                                    </b>
+                                    {{ riddle_published|pluralize:"is,are" }}<!-- This will automatically choose is or are depending on number -->
+                                    published and 
+                                    <b>
+                                        {% if riddle_draft|length == 0 %}
+                                            none 
+                                        {% else %} 
+                                            {{riddle_draft|length}}
+                                        {% endif %}
+                                    </b>
+                                    {{ riddle_draft|pluralize:"is,are" }}<!-- This will automatically choose is or are depending on number -->                            
+                                    in draft.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+<!-- ####################       A L L    D R A F T    R I D D L E           ################## -->
+
+                        {% if riddle_draft %}
+                            <div class="col-lg-11">
+                                <h2>Riddle Drafts</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Riddle Title</th>
+                                                <th>Created </th>
+                                                <th>Last Edit</th>
+                                                <th>View</th>
+                                                <!-- <th>Edit</th> -->
+                                                <th>Publish</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in riddle_draft %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title}}</td>
+                                                    <td>
+                                                        {{ p.timestamp|timesince}} ago
+                                                    </td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <!-- <td>
+                                                        <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                    </td> -->
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                        <!-- /.table div for draft Riddle  -->
+                        {% endif %}
+
+<!-- ##################         A L L    P U B L I S H E D    R I D D L E        ############### -->
+                        {% if riddle_published|length != 0 and riddle_published|length != riddles|length  %}
+                            <div class="col-lg-11">
+                                <h2>Published Riddle</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Riddle Title</th>
+                                                <th>Likes</th>
+                                                <th>Published</th>
+                                                <th>View</th>
+                                                <th>Edit</th>
+                                                <th>Draft</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in riddle_published %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title}}</td>
+                                                    <td>
+                                                        NUM 23 Likes
+                                                    </td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <td>
+                                                        <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                        <!-- /.table div for Published Riddle -->
+                        {% endif %}
+
+
+<!-- ###########################        A L L    R I D D L E S           ##################### -->
+                        {% if riddles|length != 0 %}
+                            <div class="col-lg-11">
+                                <h2>{{content_name}}</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Riddle Title</th>
+                                                <th>Last Edit</th>
+                                                <!-- <th>Status </th> -->
+                                                <th>View</th>
+                                                <th>Edit</th>
+                                                <th>Draft/Publish</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in riddles %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title}}</td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <!-- <td>
+                                                        {% if p.show_riddle == True %}
+                                                            <span class="label label-success">Published</span>
+                                                        {% else %}
+                                                            <span class="label label-warning">DRAFT</span>
+                                                        {% endif %}
+                                                    </td> -->
+                                                    <td>
+                                                        {% if p.show_riddle == True %}
+                                                            <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                        {% else %}
+                                                            <span class="label label-warning">DRAFT</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    <!-- /.table div for All riddles  -->
+                                </div>
+                                <br>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+</body>
+
+</html>

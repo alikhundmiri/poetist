@@ -1,0 +1,76 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load staticfiles %}
+<head>
+{% block title %}
+    Blank Placeholder | Dashboard | Ayesha Pages 
+{% endblock %}
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock d_nav_bar %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Guide
+                            <small>How to use this dashboard.</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard:list' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-file"></i> Guide
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">                    
+                    <div class="col-lg-12">
+                        <h3 class="page-header"> Features available currently</h3>
+                        <ol>
+                            <li><a href="{% url 'dashboard:all_poem' %}">Viewing List of all Poems</a></li>
+                            <li><a href="{% url 'dashboard:new_poem' %}">Writing new Poems</a></li>
+
+                            <li><a href="{% url 'dashboard:all_story' %}">Viewing List of all Stories</a></li>
+                            <li><a href="{% url 'dashboard:new_story' %}">Writing new Story</a></li>
+
+                            <li><a href="{% url 'dashboard:all_riddle' %}">Viewing List of all Riddles</a></li>
+                            <li><a href="{% url 'dashboard:new_riddle' %}">Writing new Riddle</a></li>
+                        </ol>
+ 
+                        <h3 class="page-header"> Features <b>Not</b> available currently</h3>
+                        <ol>
+                            <li>Graphic Explanation of total object uploads</li>
+                            <li>Editing Conveniently on Dashboard itself. You may have to go to Admin Page to Edit Poems/Riddles/Stories</li>
+                            <li>Creating new tags</li>
+                            <li>Navigating website view tags</li>
+                            <li>Search Feature</li>
+                            <li>Viewing Instant Preview in editing old writing/ new writing.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+</body>
+
+</html>

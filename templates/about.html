@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block title %}
+    {{ name }} | {{ block.super }}  
+{% endblock %}
+
+{% include "nav_bar.html" %}
+{% block content_header %}
+<div style="margin-top: 100px" class="row"></div>   
+
+<div class="row">
+    <div class="col-lg-8 col-lg-push-2">
+        <h1 class="form-signin-heading">Welcome!<br><small>I am really glad to see you here. :)</small></h1>
+        <br>
+        <p class="lead">Below you will find a bit detail about me. If want to contact me, please comment on any of my work. I read Comments regularly. Have a great time.</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-8 col-lg-push-2">
+         {% for o in qna %}
+            <h2 class="page-header">{{o.question}}</h2>
+            <p style="margin-left: 20px">{{o.answer}}</p>
+            <br>
+        {% endfor %}
+    </div>
+</div> <!-- /container -->
+
+{% endblock %}

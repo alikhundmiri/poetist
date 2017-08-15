@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ name }} | {{ block.super }}	
+{% endblock %}
+
+<!-- Navigation -->
+{% include "nav_bar.html" %}
+{% block content_body %}
+
+	<div style="margin-top: 100px" class="row"></div>	
+	<div class="row">
+		<div class="col-lg-12">
+			<h1 class="page-header">
+				{{ name }}<br>
+			</h1>
+			<ol class="breadcrumb">
+				<li>
+					<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage </a>
+				</li>
+				<li class="active">
+					<i class="fa fa-edit"></i> {{breadcrumb_text_0}} 
+				</li>
+			</ol>
+		</div>
+	</div>
+
+	{% if authors %}
+		{% for author in authors %}
+			<div class="container col-lg-4">
+				<div class="thunbnail">
+					<p><a href="/{{ author.username }}">{{ author.get_full_name }}</a></p>					
+				</div>
+			</div>
+		{% endfor %}
+		<br>
+		<hr>
+		<hr>
+		<div style="margin-top: 100px" class="row"></div>
+	{% endif %}
+{% endblock %}
+
+
+

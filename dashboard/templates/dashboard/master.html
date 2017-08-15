@@ -1,0 +1,243 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load staticfiles %}
+<head>
+{% block title %}
+    Master Monitor | Dashboard | Ayesha Pages 
+{% endblock %}
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock d_nav_bar %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Master Monitor<br>
+                            <small>Welcome to the master monitor {{ user }}.</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-file"></i> Master Monitor
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <h2>User Report</h2>
+                    <p class="Summary">Since this is a Alpha Version, Only few users can be writers.</p>
+                    <div class="col-lg-6">
+                        <h2><small>Brief</small></h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Total Signup</th>
+                                        <th>Month's Signup</th>
+                                        <th>Today's Signup</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ users }}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2><small>User Summary</small></h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Number of Users</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="warning">
+                                        <td>Master (superuser)</td>
+                                        <td>
+                                            {{ users_super }}
+                                        </td>
+                                    </tr>
+                                    <tr class="success">
+                                        <td>Writer (Staff)</td>
+                                        <td>
+                                            {{ users_staff }}
+                                        </td>
+                                    </tr>                                
+                                    <tr class="active">
+                                        <td>Active</td>
+                                        <td>
+                                            {{ users_active }}
+                                        </td>
+                                    </tr>
+                                    <tr class="danger">
+                                        <td>inactive</td>
+                                        <td>
+                                            {{ users_inactive }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Users</td>
+                                        <td>
+                                            {{ users }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <h2>Content Report</h2>
+                    <div class="col-lg-6">
+                        <h2><small>Lifetime</small></h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Posts</th>
+                                        <th>Views</th>
+                                        <th>Likes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Poems</td>
+                                        <td>{{poem_published|length}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Riddles</td>
+                                        <td>{{riddle_published|length}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stories</td>
+                                        <td>{{story_published|length}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2><small>This Month's</small></h2>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Posts</th>
+                                        <th>Views</th>
+                                        <th>Likes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Poems</td>
+                                        <td>{{poem_month}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Riddles</td>
+                                        <td>{{riddle_month}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Stories</td>
+                                        <td>{{story_month}}</td>
+                                        <td>nil</td>
+                                        <td>nil</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2><small>Publishing Ratio</small></h2>
+                        <!-- <p class="lead">The percentage of Content Published on this website</p> -->
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Time Share</th>
+                                        <th>Writer Confidence</th>
+                                        <th>Views</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Poem</td>
+                                        <td>{{poem_ts}} %</td>
+                                        <td>{{poem_c}} %</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Story</td>
+                                        <td>{{story_ts}} %</td>
+                                        <td>{{story_c}} %</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Riddle</td>
+                                        <td>{{riddle_ts}} %</td>
+                                        <td>{{riddle_c}} %</td>
+                                        <td>nil</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td>{{total_ts}} %</td>
+                                        <td>{{total_c}} %</td>
+                                        <td>nil</td>
+                                    </tr>                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.row -->
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+</body>
+
+</html>

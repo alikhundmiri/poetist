@@ -1,0 +1,77 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load crispy_forms_tags %}
+
+<head>
+{% block title %}
+    {{tab_text}} | {{ block.super }}
+{% endblock %}
+
+{% block head_extra %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
+<!-- 
+sb-admin.css has the css for making the form looks better. i.e. the charfield form is moved to a little right. to correct it, it was moved to left in sb-admin.css
+ -->
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            {{head_text}} <small> {{small_head_text}}</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard:list' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-edit"></i> {{breadcrumb_text}}
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h1 class="page-header">
+                            <small> {{sub_head_text}}</small>
+                        </h1>
+                        <form method='POST' action='' enctype='multipart/form-data'>{% csrf_token %}
+                            {{ form|crispy }}
+                            <input type='submit' class='btn btn-default' value='{{ button_text }}'/>
+                        </form>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="page-header">
+                            <small> User Preview.</small>
+                        </h1>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock %}
+</body>
+
+</html>

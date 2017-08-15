@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}	
+ 	the artist | {{name}} | {{ block.super }}
+{% endblock %}
+
+{% block content_body %}
+
+
+<div style="margin-top: 100px" class="row"></div>
+<div class="row" style="margin: 0px">
+	<h2>
+		{% if author.get_full_name %}
+			{{ author.get_full_name }}
+		{% else %}
+			{{ author.username }}
+		{% endif %}
+	</h2>
+<br>
+</div>
+<div class="row">
+	<div class="col-lg-12">
+		<ol class="breadcrumb">
+			<li>
+				<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage</a>
+			</li>
+			<li>
+				<i class="fa fa-edit"></i><a href="{% url 'writer:author_list' %}"> Authors </a>
+			</li>
+			<li class="active">
+				<i class="fa fa-edit"></i> {{author.username}}
+			</li>
+		</ol>
+	</div>
+</div>
+	
+<!-- COMPLETE DETAIL OF AUTHOR -->
+
+<h2>User Content</h2>
+<hr>
+<div class="row">
+	<div class="col-lg-12">
+		<h3>Poems</h3>
+		{% if poems %}
+			{% for poem in poems %}
+				<div class="row" style="margin: 0px">
+					<p class="pull-right">{{ poem.timestamp }}</p>
+					<p><a href="{{ poem.get_absolute_url }}">{{ poem.title }}</a></p>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p><i style="color: #C0C0C0">{% if author.get_full_name %}{{ author.get_full_name }}{% else %}{{ author.username }}{% endif %} has not written any poems yet.
+			</i></p>
+		{% endif %}
+	</div>
+	<hr>
+	<br>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h3>Stories</h3>
+		{% if stories %}
+			{% for story in stories %}
+				<div class="row" style="margin: 0px">
+					<p class="pull-right">{{ story.timestamp }}</p>
+					<p><a href="{{story.get_absolute_url}}"> {{ story.title }}</a></p>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p><i style="color: #C0C0C0">{% if author.get_full_name %}{{ author.get_full_name }}{% else %}{{ author.username }}{% endif %} has not written any stories yet.
+			</i></p>
+		{% endif %}		
+	</div>
+	<hr>
+	<br>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+		<h3>Riddles</h3>
+		{% if riddles %}
+			{% for riddle in riddles %}
+				<div class="row" style="margin: 0px">
+					<p class="pull-right">{{ riddle.timestamp }}</p>
+					<p><a href="{{riddle.get_absolute_url}}">{{ riddle.title }}</a></p>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p><i style="color: #C0C0C0">{% if author.get_full_name %}{{ author.get_full_name }}{% else %}{{ author.username }}{% endif %} has not written any riddles yet.
+			</i></p>
+		{% endif %}		
+	</div>
+	<hr>
+	<br>
+</div>
+
+<div class="row">
+	<div class="col-lg-12">
+	<ol class="breadcrumb">
+		<li>
+			<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage </a>
+		</li>
+		<li>
+			<i class="fa fa-edit"></i><a href="{% url 'writer:author_list' %}"> Author </a>
+		</li>
+		<li class="active">
+			<i class="fa fa-edit"></i> {{author.username}}
+		</li>
+	</ol>	
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,416 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<head>
+    <title>{% block title %}
+        Dashboard | Ayesha Pages 
+    {% endblock %}</title>
+
+    {% block head_extra %}
+    <!-- Custom CSS -->
+    <link href="{% static 'dashboard/css/sb-admin.css' %}" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="{% static 'dashboard/css/plugins/morris.css' %}" rel="stylesheet">
+
+    {% endblock %}
+
+</head>
+
+<body>
+{% block content_header %}
+    
+    <div id="wrapper">
+        {% block d_nav_bar %}
+            <!-- Navigation -->
+            {% include "dashboard/d_nav_bar.html" %}
+        {% endblock %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Dashboard <small>Statistics Overview</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-dashboard"></i> Dashboard
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-heart fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{ poem_published.count }}</div>
+                                        <div>Poems!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'dashboard:all_poem' %}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-question-circle fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{ riddle_published.count }}</div>
+                                        <div>Riddles!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'dashboard:all_riddle' %}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-quote-right fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">{{ story_published.count }}</div>
+                                        <div>Stories!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'dashboard:all_story' %}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+<!--                     <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-support fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge">13</div>
+                                        <div>Views Last Week!</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#">
+                                <div class="panel-footer">
+                                    <span class="pull-left">View Details</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> -->
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_area_chart == False %}
+                                    <canvas id="myChart" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+                <div class="row">
+                    
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Your Writing Pattern.</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_donut == False %}
+                                    <canvas id="myChart_pie" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart_pie" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_task_panel == False %}
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">just now</span>
+                                            <i class="fa fa-fw fa-calendar"></i> Calendar updated
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">4 minutes ago</span>
+                                            <i class="fa fa-fw fa-comment"></i> Commented on a post
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">23 minutes ago</span>
+                                            <i class="fa fa-fw fa-truck"></i> Order 392 shipped
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">46 minutes ago</span>
+                                            <i class="fa fa-fw fa-money"></i> Invoice 653 has been paid
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">1 hour ago</span>
+                                            <i class="fa fa-fw fa-user"></i> A new user has been added
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">2 hours ago</span>
+                                            <i class="fa fa-fw fa-check"></i> Completed task: "pick up dry cleaning"
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">yesterday</span>
+                                            <i class="fa fa-fw fa-globe"></i> Saved the world
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <span class="badge">two days ago</span>
+                                            <i class="fa fa-fw fa-check"></i> Completed task: "fix error on sales page"
+                                        </a>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="#">View All Activity <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                {% else %}
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>                
+                    <div class="col-lg-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_transaction_panel == False %}
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Order #</th>
+                                                    <th>Order Date</th>
+                                                    <th>Order Time</th>
+                                                    <th>Amount (USD)</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>3326</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>3:29 PM</td>
+                                                    <td>$321.33</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3325</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>3:20 PM</td>
+                                                    <td>$234.34</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3324</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>3:03 PM</td>
+                                                    <td>$724.17</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3323</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>3:00 PM</td>
+                                                    <td>$23.71</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3322</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>2:49 PM</td>
+                                                    <td>$8345.23</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3321</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>2:23 PM</td>
+                                                    <td>$245.12</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3320</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>2:15 PM</td>
+                                                    <td>$5663.54</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3319</td>
+                                                    <td>10/21/2013</td>
+                                                    <td>2:13 PM</td>
+                                                    <td>$943.45</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="text-right">
+                                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
+                                    </div>
+                                {% else %}
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+
+{% block custom_javascript %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js "></script>
+    <script>
+        $(document).ready(function(){
+            var endpoint = "dashboard/api/chart/data/"
+            var defaultData = [{{ poem_published.count }},{{ riddle_published.count }},{{ story_published.count }}]
+            var labels = []
+            $.ajax({
+                method : 'GET',
+                url : endpoint,
+                success: function(data) {
+                    labels = data.labels
+                    // defaultData = data.default
+                    console.log(data)
+                    // SHOWING THE CHART HERE
+                    var ctx = document.getElementById("myChart").getContext('2d');
+                    
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Posts',
+                                data: defaultData,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.9)',
+                                    'rgba(54, 162, 235, 0.9)',
+                                    'rgba(255, 206, 86, 0.9)',
+                                    'rgba(75, 192, 192, 0.9)',
+                                    'rgba(153, 102, 255, 0.9)',
+                                    'rgba(255, 159, 64, 0.9)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 0
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    // END OF SHOWING THE CHART HERE
+                    var ctx2 = document.getElementById("myChart2").getContext('2d');
+                    var ctx2 = document.getElementById("myChart_pie").getContext('2d');
+                    var myChart = new Chart(ctx2, {
+                        type: 'pie',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Published',
+                                data: defaultData_published,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.9)',
+                                    'rgba(54, 162, 235, 0.9)',
+                                    'rgba(255, 206, 86, 0.9)',
+                                    'rgba(75, 192, 192, 0.9)',
+                                    'rgba(153, 102, 255, 0.9)',
+                                    'rgba(255, 159, 64, 0.9)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 0
+
+                            }
+                        ]},
+                    });
+                    // END OF SHOWING THE CHART HERE
+                },
+                error: function(error_data) {
+                    console.log("error")
+                    console.log(error_data)
+                },
+
+            })
+        })
+    </script>    
+
+{% endblock %}
+
+{% block footer %}
+<p>thanks</p>
+{% endblock %}
+
+
+</body>
+
+</html>

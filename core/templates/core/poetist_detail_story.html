@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ stories.title|title }} By
+	{% if stories.author %}
+		{% if stories.author.get_full_name %}
+			{{stories.author.get_full_name}}
+		{% else %}
+			{{stories.author}}
+		{% endif %}
+	{% else %}
+		Anonymous
+	{% endif %}
+	| {{name}} | {{ block.super }}
+{% endblock %}
+
+{% block content_body %}
+
+
+<div style="margin-top: 100px" class="row"></div>
+<div class="row">
+	<div class="col-lg-12">
+		<h1 class="page-header"> {{ stories.title|title }}<br>
+			<small>By
+				{% if stories.author %}
+					<a href="/{{stories.author.username}}">
+						{% if stories.author.get_full_name %}
+							{{stories.author.get_full_name}}
+						{% else %}
+							{{stories.author}}
+						{% endif %}
+					</a>
+				{% else %}
+					Anonymous
+				{% endif %}
+			</small>
+			<small class="pull-right" style="color: #BCAC9B; font-size: 0.5em">	Uploaded : {{stories.timestamp|timesince}} ago
+			</small>
+		</h1>
+
+		<ol class="breadcrumb">
+			<li>
+				<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage</a>
+			</li>
+			<li class="">
+				<i class="fa fa-edit"></i><a href="{% url 'writer:story_list' %}"> {{breadcrumb_text_0}} </a>
+			</li>
+			<li class="active">
+				<i class="fa fa-edit"></i> {{stories.title|truncatewords:5}}
+			</li>
+		</ol>
+	</div>
+</div>
+	<div class="container col-lg-12" style="padding: ">
+		<div class=" col-lg-12">
+			<h4 class="pull-left">{{ stories.title|title }}.</h4>
+			<br>
+			<br>
+			<p class="lead">{{ stories.story|linebreaksbr }}</p>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<!-- The comment and like section, Common to all the content -->
+	
+	<hr><br>
+	<p>Hey!. how did you like this {{name_nav}}? Comment below you feedback, or if you have a doubt, feel free to ask.</p>
+	<div class="fb-like" data-href="{{request.build_absolute_uri}}" data-layout="button_count" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+	<br>	
+	
+	
+	<div id="disqus_thread"></div>
+	<script>
+
+	/**
+	*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	/
+	var disqus_config = function () {
+	this.page.url = '{{ request.build_absolute_uri }}';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = '{{ stories.slug }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	};
+	
+	(function() { // DON'T EDIT BELOW THIS LINE
+	var d = document, s = d.createElement('script');
+	s.src = 'https://aiyeshapages.disqus.com/embed.js';
+	s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
+	})();
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+	<div class="row">
+		<div class="col-lg-12">
+			<ol class="breadcrumb">
+				<li>
+					<i class="fa fa-dashboard"></i><a href="{% url 'writer:list' %}"> Homepage</a>
+				</li>
+				{% if stories %}
+					<li class="">
+						<i class="fa fa-edit"></i><a href="{% url 'writer:story_list' %}"> {{breadcrumb_text_0}} </a>
+					</li>
+					<li class="active">
+						<i class="fa fa-edit"></i> {{stories.title|truncatewords:5}}
+					</li>
+				{% endif %}
+			</ol>
+		</div>
+	</div>
+	{% if stories.related_story %}
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header"> Related Stories </h1>
+				{% for story in stories.related_story.all %}
+					<h3>{{story.title}}</h3>
+					<p>{{story.story|truncatewords:20}}  <a href="{{story.get_absolute_url}}"> Read More</a></p>
+					<hr>
+				{% endfor %}
+			</div>
+		</div>
+	{% endif %}
+	<script id="dsq-count-scr" src="//aiyeshapages.disqus.com/count.js" async></script>
+{% endblock %}
+
+{% block custom_javascript %}
+
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));
+	</script>
+
+{% endblock %}

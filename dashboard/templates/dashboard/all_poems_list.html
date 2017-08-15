@@ -1,0 +1,244 @@
+
+{% extends 'dashboard/dashboard_base.html' %}
+{% load staticfiles %}
+<head>
+{% block title %}
+    Your Poems | Dashboard | Ritrew - Poem, Story, and Riddle.
+{% endblock %}
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock d_nav_bar %}
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header pull-right" >
+                        <a href="{% url 'dashboard:new_poem' %}" type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Add New</a>
+                        <a href="{% url 'writer:poem_list' %}" type="button" class="btn btn-info"><i class="fa fa-eye"></i> Visit Page</a>
+                        <!-- For creating a new instance. Custom for all types of forms. -->
+                        </h1>
+                        <h1 class="page-header">
+                            {{ content_name }}
+                            <small>{{ content_name_detail }}</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard:list' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-file"></i> {{ content_name }}
+                            </li>
+                        </ol>
+                    </div>
+
+
+
+<!-- ########### P O E M S    P A G E ################## -->
+                    {% if name == 'd_a_poem' %}
+                        <div class="col-lg-11 ">
+                            <div class="jumbotron">
+                                <h3>Report</h3>
+                                {% if poems.count < 1 %}
+                                    <p>Looks like you have not yet published any Poems,<br> Heres, a Guide for you to get started.<br></p>
+                                    <ol>
+                                        <li>Click on Add new button on the top right corner of this page.</li>
+                                        <li>Write your Title & Poem in the appropriate blanks on the new pages that opens up.</li>
+                                        <li>Select "Show Poem" in the last line.</li>
+                                        <li>CLick on "Publish New Poem".</li>
+                                        <li>???</li>
+                                        <li>Profit.</li>
+                                    </ol>
+                                {% else %}
+                                    <p>
+                                        You have written a total of 
+                                        <b>{{poems|length}}</b>
+                                        poem{{poems|pluralize}}
+                                        since dd-mm-yy, of which 
+                                        <b>
+                                            {% if poem_published|length == poems|length %}
+                                                all 
+                                            {% else %}
+                                                {{poem_published|length}}
+                                            {% endif %}
+                                        </b>
+                                        {{ poem_published|pluralize:"is,are" }}<!-- This will automatically choose is or are depending on number -->
+                                        published and 
+                                        <b>
+                                            {% if poem_draft|length == 0 %}
+                                                none 
+                                            {% else %} 
+                                                {{poem_draft|length}}
+                                            {% endif %}
+                                        </b>
+                                        {{ poem_draft|pluralize:"is,are" }}<!-- This will automatically choose is or are depending on number -->
+                                        in draft.
+                                    </p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+<!-- ###########################      A L L    D R A F T    P O E M S     ###################### -->
+
+
+                        {% if poem_draft %}
+                            <div class="col-lg-11">
+                                <h2>Poem Drafts</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Poem Title</th>
+                                                <th>Created</th>
+                                                <th>Last Edit</th>
+                                                <!-- <th>View</th> -->
+                                                <th>Edit</th>
+                                                <th>Publish</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in poem_draft %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title}}</td>
+                                                    <td>
+                                                        {{ p.timestamp|timesince }} ago
+                                                    </td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <!-- <td>
+                                                        <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                    </td> -->
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                        <!-- /.table div for draft poems -->
+                        {% endif %}
+
+
+
+<!-- ######################     A L L    P U B L I S H E D    P O E M S      ########################## -->
+                        {% if poem_published|length != 0 and poem_published|length !=  poems|length %}
+                            <div class="col-lg-11">
+                                <h2>Published Poems</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Poem Title</th>
+                                                <th>Wah! Wah!</th>
+                                                <th>Published</th>
+                                                <th>View</th>
+                                                <th>Edit</th>
+                                                <th>Draft</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in poem_published %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title}}</td>
+                                                    <td>NUM, 32 Wah</td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <td>
+                                                        <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                        <!-- /.table div for published poems -->
+                        {% endif %}
+
+<!-- ##############################      A L L    P O E M S       ##################################### -->
+                        {% if poems|length !=  0 %}
+                            <div class="col-lg-11 ">
+                                <h2>{{content_name}}</h2>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>sno</th>
+                                                <th>Poem Title</th>
+                                                <th>Last Modified</th>
+                                                <!-- <th>Status </th> -->
+                                                <th>View</th>
+                                                <th>Edit</th>
+                                                <th>Draft/Publish</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for p in poems %}
+                                                <tr>
+                                                    <td>{{ forloop.counter }}</td>
+                                                    <td>{{ p.title }}</td>
+                                                    <td>{{ p.updated|timesince }} ago</td>
+                                                    <!-- <td>
+                                                        {% if p.show_poem == True %}
+                                                            <span class="label label-success">Published</span>
+                                                        {% else %}
+                                                            <span class="label label-warning">DRAFT</span>
+                                                        {% endif %}
+                                                    </td> -->
+                                                    <td>
+                                                        {% if p.show_poem == True %}
+                                                            <a href="{{ p.get_absolute_url }}" class="button btn btn-info"><i class="fa fa-fw fa-eye"></i></a>
+                                                        {% else %}
+                                                            <span class="label label-warning">DRAFT</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_edit_url }}" class="button btn btn-warning"><i class="fa fa-fw fa-pencil"></i></a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="{{ p.get_draft_toggle_url }}" class="button btn btn-danger"><i class="fa fa-fw fa-clipboard"></i></a>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                            </div>
+                            <!-- /.table div for all poems -->
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+</body>
+
+</html>

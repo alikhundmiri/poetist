@@ -1,0 +1,306 @@
+{% extends 'dashboard/dashboard_base.html' %}
+{% load staticfiles %}
+<head>
+{% block title %}
+    Brief Reports | Dashboard | Ayesha Pages 
+{% endblock %}
+</head>
+<body>
+{% block content_header %}
+
+    <div id="wrapper">
+    {% block d_nav_bar %}
+        <!-- Navigation -->
+        {% include "dashboard/d_nav_bar.html" %}
+    {% endblock d_nav_bar %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Charts
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i>  <a href="{% url 'dashboard:list' %}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-bar-chart-o"></i> Charts
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- Morris Charts -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h2 class="page-header">Your Progress Report</h2>
+                        <p class="lead">You have been a busy writer in these past days. To guide you to the goals, and keep you motivated, we have generated these graphs which sums up your writing. These Graphs will help you understand where your writing is going to lead you to. Enjoy the Charts.</p>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Writings Written and Drafts.</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_area_chart == False %}
+                                    <canvas id="myChart" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Your Writing Pattern.</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_donut == False %}
+                                    <canvas id="myChart_pie" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart_pie" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Most Liked Content in Past 30 days.</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_area_chart == False %}
+                                    <canvas id="myChart_liked" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart_liked" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+                    <div class="col-lg-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Most Viewed Content in Past 30 days.</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_area_chart == False %}
+                                    <canvas id="myChart_viewed" width="400" height="200"></canvas>
+                                {% else %}
+                                    <canvas id="myChart_viewed" width="400" height="200" class="hidden"></canvas>
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+                </div>
+                <!-- /.row -->                
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Donut Chart Example</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-donut-chart"></div>
+                                <div class="text-right">
+                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Line Graph Example with Tooltips</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-line-chart"></div>
+                                <div class="text-right">
+                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph Example</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id="morris-bar-chart"></div>
+                                <div class="text-right">
+                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        {% include 'footer.html' %}
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock content_header %}
+
+{% block custom_javascript %}
+    <!-- Morris Charts JavaScript -->
+<!--     
+    <script src="{% static 'dashboard/js/plugins/morris/raphael.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins/morris/morris.min.js' %}"></script>
+    <script src="{% static 'dashboard/js/plugins/morris/morris-data.js' %}"></script>
+ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js "></script>
+    <script>
+        $(document).ready(function(){
+            var endpoint = "dashboard/api/chart/data/"
+            var defaultData_total = [{{ poem_draft.count }},{{ riddle_draft.count }},{{ story_draft.count }}]
+            var defaultData_published = [{{ poem_published.count }},{{ riddle_published.count }},{{ story_published.count }}]
+            var labels = []
+            $.ajax({
+                method : 'GET',
+                url : endpoint,
+                success: function(data) {
+                    labels = data.labels
+                    // defaultData = data.default
+                    console.log(data)
+                    // SHOWING THE CHART HERE
+                    var ctx = document.getElementById("myChart").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Published',
+                                data: defaultData_published,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.9)',
+                                    'rgba(54, 162, 235, 0.9)',
+                                    'rgba(255, 206, 86, 0.9)',
+                                    'rgba(75, 192, 192, 0.9)',
+                                    'rgba(153, 102, 255, 0.9)',
+                                    'rgba(255, 159, 64, 0.9)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 0
+
+                            },
+                            {
+                                label: 'Draft',
+                                data: defaultData_total,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)',
+                                    'rgba(153, 102, 255, 0.5)',
+                                    'rgba(255, 159, 64, 0.5)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,0.1)',
+                                    'rgba(54, 162, 235, 0.1)',
+                                    'rgba(255, 206, 86, 0.1)',
+                                    'rgba(75, 192, 192, 0.1)',
+                                    'rgba(153, 102, 255, 0.1)',
+                                    'rgba(255, 159, 64, 0.1)'
+                                ],
+                                borderWidth: 1
+                            },
+                        ]},
+
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    stacked: true,
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }],
+                                xAxes: [{
+                                    stacked: true,
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                    // END OF SHOWING THE CHART HERE
+                    var ctx2 = document.getElementById("myChart_pie").getContext('2d');
+                    var myChart = new Chart(ctx2, {
+                        type: 'pie',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Published',
+                                data: defaultData_published,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.9)',
+                                    'rgba(54, 162, 235, 0.9)',
+                                    'rgba(255, 206, 86, 0.9)',
+                                    'rgba(75, 192, 192, 0.9)',
+                                    'rgba(153, 102, 255, 0.9)',
+                                    'rgba(255, 159, 64, 0.9)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 0
+
+                            }
+                        ]},
+                    });
+                    // END OF SHOWING THE CHART HERE
+                },
+                error: function(error_data) {
+                    console.log("error")
+                    console.log(error_data)
+                },
+
+            })
+        })
+    </script>    
+
+{% endblock %}
+
+</body>
+
+</html>
