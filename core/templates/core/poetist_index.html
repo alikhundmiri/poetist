@@ -12,25 +12,40 @@
                     <div class="intro-message">
                         <h1>Ritrew</h1>
                         <h3>Poem, Story, and Riddle.</h3>
+                        <br>
+                        <br>
+                        <div class="row">
+	                        	<ul class="list-inline">
+	                        		<li>
+				                        <div class="col-lg-8; center">
+				                        	<a href="{% url 'register' %}" class="btn btn-lg btn-danger">Signup for Free!!</a>
+				                        </div>
+	                        		</li>
+	                        		<li>
+				                        <div class="col-lg-8; center">
+				                        	<a href="{% url 'login' %}" class="btn btn-lg btn-primary">Login Now</a>
+				                        </div>
+	                        		</li>	                        		
+	                        	</ul>
+                        </div>
                         <hr class="intro-divider">
                         <ul class="list-inline intro-social-buttons">
                             <li>
-			<div class="btn-group" role="group" aria-label="...">
-							<a href="#poems" class="btn btn-default btn-lg"><i class="fa fa-heart fa-fw"></i></a>
-							<a href="{% url 'writer:poem_list' %}" class="btn btn-default btn-lg"><span class="network-name">Poems</span></a>
+								<div class="btn-group" role="group" aria-label="...">
+									<a href="#poems" class="btn btn-default btn-lg"><i class="fa fa-heart fa-fw"></i></a>
+									<a href="{% url 'writer:poem_list' %}" class="btn btn-default btn-lg"><span class="network-name">Poems</span></a>
 								</div>
                             </li>
                             <li>
-			<div class="btn-group" role="group" aria-label="...">
-                                <a href="#stories" class="btn btn-default btn-lg"><i class="fa fa-quote-right fa-fw"></i></a>
-                                <a href="{% url 'writer:story_list' %}" class="btn btn-default btn-lg"><span class="network-name">Stories</span></a>
-                                </div>
+								<div class="btn-group" role="group" aria-label="...">
+									<a href="#stories" class="btn btn-default btn-lg"><i class="fa fa-quote-right fa-fw"></i></a>
+									<a href="{% url 'writer:story_list' %}" class="btn btn-default btn-lg"><span class="network-name">Stories</span></a>
+								</div>
                             </li>
                             <li>
-			<div class="btn-group" role="group" aria-label="...">	
-                                <a href="#riddles" class="btn btn-default btn-lg"><i class="fa fa-question-circle fa-fw"></i></a>
-                                <a href="{% url 'writer:riddle_list' %}" class="btn btn-default btn-lg"><span class="network-name">Riddles</span></a>
-
+								<div class="btn-group" role="group" aria-label="...">	
+                                	<a href="#riddles" class="btn btn-default btn-lg"><i class="fa fa-question-circle fa-fw"></i></a>
+                                	<a href="{% url 'writer:riddle_list' %}" class="btn btn-default btn-lg"><span class="network-name">Riddles</span></a>
                                 </div>
                             </li>
                         </ul>

@@ -40,25 +40,57 @@
                     <div class="col-lg-12">
                         <h3 class="page-header"> Features available currently</h3>
                         <ol>
-                            <li><a href="{% url 'dashboard:all_poem' %}">Viewing List of all Poems</a></li>
-                            <li><a href="{% url 'dashboard:new_poem' %}">Writing new Poems</a></li>
-
-                            <li><a href="{% url 'dashboard:all_story' %}">Viewing List of all Stories</a></li>
-                            <li><a href="{% url 'dashboard:new_story' %}">Writing new Story</a></li>
-
-                            <li><a href="{% url 'dashboard:all_riddle' %}">Viewing List of all Riddles</a></li>
-                            <li><a href="{% url 'dashboard:new_riddle' %}">Writing new Riddle</a></li>
+                            <li><a href="{% url 'dashboard:list' %}">Dashboard</a></li>
+                            <li>
+                                <p>
+                                    <a href="{% url 'dashboard:charts' %}">
+                                        Progress Report
+                                    </a>
+                                    <small style="color: #c0c0c0">
+                                        Pro Version Feature. Available for limited time.
+                                    </small>
+                                </p>
+                            </li>
+                            <li>View all of your Work
+                                <ul>
+                                    <li><a href="{% url 'dashboard:all_poem' %}">Poems</a></li>
+                                    <li><a href="{% url 'dashboard:all_story' %}">Stories</a></li>
+                                    <li><a href="{% url 'dashboard:all_riddle' %}">Riddles</a></li>
+                                </ul>
+                            </li>
+                            <li> Write New
+                                <ul>
+                                    <li><a href="{% url 'dashboard:new_poem' %}">Poem</a></li>
+                                    <li><a href="{% url 'dashboard:new_story' %}">Story</a></li>
+                                    <li><a href="{% url 'dashboard:new_riddle' %}">Riddle</a></li>
+                                </ul>
+                            </li>
                         </ol>
  
-                        <h3 class="page-header"> Features <b>Not</b> available currently</h3>
+                        <h3 class="page-header"> Features <b>Not</b> available currently<br><small>Under Development</small></h3>
                         <ol>
-                            <li>Graphic Explanation of total object uploads</li>
-                            <li>Editing Conveniently on Dashboard itself. You may have to go to Admin Page to Edit Poems/Riddles/Stories</li>
+                            <li><del>Graphic Explanation of your writing uploads</del></li>
+                            <li><del>Editing Conveniently on Dashboard itself. You may have to go to Admin Page to Edit Poems/Riddles/Stories</del></li>
                             <li>Creating new tags</li>
-                            <li>Navigating website view tags</li>
+                            <li>Navigating website via tags</li>
                             <li>Search Feature</li>
-                            <li>Viewing Instant Preview in editing old writing/ new writing.</li>
+                            <li><p> Viewing Instant Preview in editing old writing/ new writing.
+                                    <small style="color: #c0c0c0">
+                                        Pro Version Feature. Available for limited time.
+                                    </small>
+                                </p>
+                            </li>
                         </ol>
+
+                        <h3 class="page-header"> Thank you <br><small>Message to you, from the Developer</small></h3>
+                        <p class="lead">Dear {{user}},</p>
+                        <p class="lead">Thank you for showing us your support by signing up on Ritrew, we hope you find your passion in writing on this platform, and help us create a community which thrives on sharing our writing with the world.</p>
+                        <p class="lead">We hope you will like the website, it was developed by keeping a writer in mind and to help you back by providing proper user feedback.</p>
+                        <p class="lead">You can write an email to us at <a href="mailto:alikhundmiri.developer@gmail.com?Subject=From%20Your%20User" target="_top">alikhundmiri.developer@gmail.com</a> anytime with your suggestions, ideas, and complaints. we would do everything in my control to help you back.</p>
+                        <hr>
+                        <p class="lead">This website is developed and maintained by a single person. This being my only source of income, I ask the community to help me continue the work on this website and bring food on the table. I don't intent to monetise this website though ads and clutter this community. I would appriciate you help very much.</p>
+                        <p>-Ali</p>
+                        <a href="https://www.patreon.com/bePatron?u=5303033" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
                     </div>
                 </div>
             </div>

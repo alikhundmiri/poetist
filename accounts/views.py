@@ -18,7 +18,7 @@ def login_view(request):
 		return redirect('/')
 	context = {
 		"name_nav" : 'login',
-		"nbar" : "login",
+		"nbar" : "Login",
 		"form" : form,
 	}
 	return render(request, 'accounts/login.html', context)
@@ -36,7 +36,7 @@ def register_view(request):
 		return redirect("/")
 	context = {
 		"name_nav" : 'register',	
-		"nbar" : "register",
+		"nbar" : "Create Free Account",
 		"form":form,
 	}
 	return render(request, 'accounts/login.html', context)

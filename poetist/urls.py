@@ -1,14 +1,3 @@
-"""
-/				index
-/<slug> 		poem/story/riddle/author
-/poems			all poems
-/riddles		all riddles
-/stories		all stories
-/dashboard		@login_required user's panel
-/
-
-url(r'^/', )
-"""
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings

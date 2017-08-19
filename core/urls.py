@@ -19,12 +19,12 @@ urlpatterns = [
 	url(r'^stories/(?P<slug>[\w-]+)/edit/$', d_views.edit_story, name='edit_story'),
 	url(r'^riddles/(?P<slug>[\w-]+)/edit/$', d_views.edit_riddle, name='edit_riddle'),
 
-	url(r'^poems/(?P<slug>[\w-]+)/delete', views.delete_poem, name='delete_poem'),
-	url(r'^stories/(?P<slug>[\w-]+)/delete', views.delete_story, name='delete_story'),
-	url(r'^riddles/(?P<slug>[\w-]+)/delete', views.delete_riddle, name='delete_riddle'),
+	url(r'^poems/(?P<slug>[\w-]+)/delete/$', views.delete_poem, name='delete_poem'),
+	url(r'^stories/(?P<slug>[\w-]+)/delete/$', views.delete_story, name='delete_story'),
+	url(r'^riddles/(?P<slug>[\w-]+)/delete/$', views.delete_riddle, name='delete_riddle'),
 
-	url(r'^poems/(?P<slug>[\w-]+)/draft', d_views.draft_poem_toggle.as_view(), name='draft_poem_toggle'),
-	url(r'^stories/(?P<slug>[\w-]+)/draft', d_views.draft_story_toggle.as_view(), name='draft_story_toggle'),
-	url(r'^riddles/(?P<slug>[\w-]+)/draft', d_views.draft_riddle_toggle.as_view(), name='draft_riddle_toggle'),
+	url(r'^poems/(?P<slug>[\w-]+)/draft/$', d_views.draft_poem_toggle.as_view(), name='draft_poem_toggle'),
+	url(r'^stories/(?P<slug>[\w-]+)/draft/$', d_views.draft_story_toggle.as_view(), name='draft_story_toggle'),
+	url(r'^riddles/(?P<slug>[\w-]+)/draft/$', d_views.draft_riddle_toggle.as_view(), name='draft_riddle_toggle'),
 	
 ]

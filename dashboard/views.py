@@ -37,6 +37,10 @@ def index(request):
 	riddles_published = all_riddles.objects.filter(show_riddle = True).filter(riddler = request.user)
 	riddles_draft = all_riddles.objects.filter(show_riddle = False).filter(riddler = request.user)
 
+	last_poem = poem_published.order_by('-updated')[:1]
+	last_story = stories_published.order_by('-updated')[:1]
+	last_riddle = riddles_published.order_by('-updated')[:1]
+	
 	context = {
 		"name" : "d_index",
 
@@ -52,7 +56,11 @@ def index(request):
 		"riddle_draft" : riddles_draft,
 		"riddle_published" : riddles_published,
 
-		"hide_area_chart" : True,
+		"last_poem" : last_poem,
+		"last_story" : last_story,
+		"last_riddle" : last_riddle,
+
+		"hide_area_chart" : False,
 		"hide_donut" : False,
 		"hide_task_panel" : False,
 		"hide_transaction_panel" : False,
@@ -351,7 +359,6 @@ class draft_riddle_toggle(RedirectView):
 ############################### C H A R T S ##################################
 @user_passes_test(lambda u: u.is_staff)
 def charts(request):
-
 	poems = all_poems.objects.filter(poet = request.user)
 	poem_published = all_poems.objects.filter(show_poem = True).filter(poet = request.user)
 	poem_draft = all_poems.objects.filter(show_poem = False).filter(poet = request.user)
@@ -364,12 +371,44 @@ def charts(request):
 	riddles_published = all_riddles.objects.filter(show_riddle = True).filter(riddler = request.user)
 	riddles_draft = all_riddles.objects.filter(show_riddle = False).filter(riddler = request.user)
 
+	########       C A L C U L A T I O N S    S T A R T S     H E R E 
+	total_writings = poems.count() + stories.count() + riddles.count()
+	total_publish = poem_published.count() + stories_published.count() + riddles_published.count()
+	# time share
+	poem_ts = 0
+	story_ts = 0
+	riddle_ts = 0
+	total_ts = 0
+
+	if total_publish != 0:
+		poem_ts = round((poem_published.count() / total_publish) * 100,1)
+		story_ts = round((stories_published.count() / total_publish) * 100,1)
+		riddle_ts = round((riddles_published.count() / total_publish) * 100,1)
+		total_ts = poem_ts+story_ts+riddle_ts
+
+	
+	# writer Confidence
+	poem_c = 0
+	story_c = 0
+	riddle_c = 0
+	total_c = 0
+
+	if poems.count() != 0:
+		poem_c = round((poem_published.count()/poems.count())*100,1)
+	if stories.count() != 0:
+		story_c = round((stories_published.count()/stories.count())*100,1)
+	if riddles.count() != 0:
+		riddle_c = round((riddles_published.count()/riddles.count())*100,1)	
+	if total_writings != 0:
+		total_c = round((total_publish/total_writings)*100,1)
+
 	context = {
+		"name" : "d_charts",
 
 		"poems" : poems,
 		"poem_draft" : poem_draft,
 		"poem_published" : poem_published,
-
+		
 		"stories" : stories,
 		"story_draft" : stories_draft,
 		"story_published" : stories_published,
@@ -378,50 +417,25 @@ def charts(request):
 		"riddle_draft" : riddles_draft,
 		"riddle_published" : riddles_published,
 
+		"poem_ts" : poem_ts,
+		"story_ts" : story_ts,
+		"riddle_ts" : riddle_ts,
+		"total_ts" : total_ts,
 
-		"name" : "d_charts",
+		"poem_c" : poem_c,
+		"story_c" : story_c,
+		"riddle_c" : riddle_c,
+		"total_c" : total_c,
+
 		"hide_area_chart" : False,
 		"hide_donut" : False,
 		"hide_task_panel" : False,
 		"hide_transaction_panel" : False,
 
+
 	}
-	
+
 	return render(request, 'dashboard/charts.html', context)
-
-############################### T A B L E S ##################################
-@user_passes_test(lambda u: u.is_staff)
-def tables(request):
-
-	poems = all_poems.objects.filter(poet = request.user)
-	poem_published = all_poems.objects.filter(show_poem = True).filter(poet = request.user)
-	poem_draft = all_poems.objects.filter(show_poem = False).filter(poet = request.user)
-
-	stories = all_stories.objects.filter(author = request.user)
-	stories_published = all_stories.objects.filter(show_story = True).filter(author = request.user)
-	stories_draft = all_stories.objects.filter(show_story = False ).filter(author = request.user)
-
-	riddles = all_riddles.objects.filter(riddler = request.user)
-	riddles_published = all_riddles.objects.filter(show_riddle = True).filter(riddler = request.user)
-	riddles_draft = all_riddles.objects.filter(show_riddle = False).filter(riddler = request.user)
-
-	context = {
-		"name" : "d_tables",
-
-		"poems" : poems,
-		"poem_draft" : poem_draft,
-		"poem_published" : poem_published,
-		
-		"stories" : stories,
-		"story_draft" : stories_draft,
-		"story_published" : stories_published,
-		
-		"riddles" : riddles,
-		"riddle_draft" : riddles_draft,
-		"riddle_published" : riddles_published,
-	}
-
-	return render(request, 'dashboard/tables.html', context)
 
 
 	
@@ -450,7 +464,7 @@ def master(request):
 	super_users = User.objects.filter(is_superuser=True).count()
 	staff_users = User.objects.filter(is_staff=True).count()
 
-		
+
 	########       C A L C U L A T I O N S    S T A R T S     H E R E 
 	total_writings = poems.count() + stories.count() + riddles.count()
 	total_publish = poem_published.count() + stories_published.count() + riddles_published.count()
@@ -531,8 +545,6 @@ def guide(request):
 
 ###############################    T E S T I N G    C H A R T S . J S   ##################################
 # Trying from CFE videos
-
-# User_s = get_user_model()
 
 class ChartData(APIView):
 	authentication_classes = []

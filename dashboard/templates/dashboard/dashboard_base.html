@@ -107,61 +107,19 @@
                             </a>
                         </div>
                     </div>
-<!--                     <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-support fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge">13</div>
-                                        <div>Views Last Week!</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="#">
-                                <div class="panel-footer">
-                                    <span class="pull-left">View Details</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div> -->
                 </div>
                 <!-- /.row -->
+                
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Area Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                {% if hide_area_chart == False %}
-                                    <canvas id="myChart" width="400" height="200"></canvas>
-                                {% else %}
-                                    <canvas id="myChart" width="400" height="200" class="hidden"></canvas>
-                                    <p>Oops, This Feature is not available yet</p>
-                                {% endif %}                                    
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-                <div class="row">
-                    
-
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="panel panel-green">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Your Writing Pattern.</h3>
+                                <h3 class="panel-title"><i class="fa fa-pie-chart"></i> Your Writing Pattern.</h3>
                             </div>
                             <div class="panel-body">
                                 {% if hide_donut == False %}
                                     <canvas id="myChart_pie" width="400" height="200"></canvas>
                                 {% else %}
-                                    <canvas id="myChart_pie" width="400" height="200" class="hidden"></canvas>
                                     <p>Oops, This Feature is not available yet</p>
                                 {% endif %}
                             </div>
@@ -169,7 +127,62 @@
                     </div>
                     <!-- /. column -->
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i> Published and Draft</h3>
+                            </div>
+                            <div class="panel-body">
+                                {% if hide_area_chart == False %}
+                                    <canvas id="myChart" width="400" height="200"></canvas>
+                                {% else %}
+                                    <p>Oops, This Feature is not available yet</p>
+                                {% endif %}                                    
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /. column -->
+                </div>
+
+                 <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-8 col-md-8 col-sm-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i>Shortcuts</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="list-group">
+                                    <a href="{% url 'dashboard:new_poem' %}" class="list-group-item">
+                                        <span class="badge">
+                                            {% for p in last_poem %}
+                                                {{ p.updated|timesince }} ago
+                                            {% endfor %}
+                                        </span>
+                                        <i class="fa fa-fw fa-heart"></i> New Poem
+                                    </a>
+                                    <a href="{% url 'dashboard:new_riddle' %}" class="list-group-item">
+                                        <span class="badge">
+                                            {% for p in last_riddle %}
+                                                {{ p.updated|timesince }} ago
+                                            {% endfor %}
+                                        </span>
+                                        <i class="fa fa-fw fa-question-circle"></i> New Riddle
+                                    </a>
+                                    <a href="{% url 'dashboard:new_story' %}" class="list-group-item">
+                                        <span class="badge">
+                                            {% for p in last_story %}
+                                                {{ p.updated|timesince }} ago
+                                            {% endfor %}
+                                        </span>
+                                        <i class="fa fa-fw fa-quote-right"></i> New Story
+                                    </a>
+                                 </div>
+                            </div>
+                        </div>
+                    </div>                
+
+                    <div class="col-lg-4 col-md-4 col-sm-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> Tasks Panel</h3>
@@ -219,84 +232,6 @@
                             </div>
                         </div>
                     </div>                
-                    <div class="col-lg-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> Transactions Panel</h3>
-                            </div>
-                            <div class="panel-body">
-                                {% if hide_transaction_panel == False %}
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-hover table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Order #</th>
-                                                    <th>Order Date</th>
-                                                    <th>Order Time</th>
-                                                    <th>Amount (USD)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>3326</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:29 PM</td>
-                                                    <td>$321.33</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3325</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:20 PM</td>
-                                                    <td>$234.34</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3324</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:03 PM</td>
-                                                    <td>$724.17</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3323</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>3:00 PM</td>
-                                                    <td>$23.71</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3322</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:49 PM</td>
-                                                    <td>$8345.23</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3321</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:23 PM</td>
-                                                    <td>$245.12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3320</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:15 PM</td>
-                                                    <td>$5663.54</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3319</td>
-                                                    <td>10/21/2013</td>
-                                                    <td>2:13 PM</td>
-                                                    <td>$943.45</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="text-right">
-                                        <a href="#">View All Transactions <i class="fa fa-arrow-circle-right"></i></a>
-                                    </div>
-                                {% else %}
-                                    <p>Oops, This Feature is not available yet</p>
-                                {% endif %}
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- /.row -->
             </div>
@@ -309,12 +244,12 @@
 {% endblock content_header %}
 
 {% block custom_javascript %}
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js "></script>
     <script>
         $(document).ready(function(){
             var endpoint = "dashboard/api/chart/data/"
-            var defaultData = [{{ poem_published.count }},{{ riddle_published.count }},{{ story_published.count }}]
+            var defaultData_total = [{{ poem_draft.count }},{{ riddle_draft.count }},{{ story_draft.count }}]
+            var defaultData_published = [{{ poem_published.count }},{{ riddle_published.count }},{{ story_published.count }}]
             var labels = []
             $.ajax({
                 method : 'GET',
@@ -325,14 +260,13 @@
                     console.log(data)
                     // SHOWING THE CHART HERE
                     var ctx = document.getElementById("myChart").getContext('2d');
-                    
                     var myChart = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Posts',
-                                data: defaultData,
+                                label: 'Published',
+                                data: defaultData_published,
                                 backgroundColor: [
                                     'rgba(255, 99, 132, 0.9)',
                                     'rgba(54, 162, 235, 0.9)',
@@ -350,20 +284,49 @@
                                     'rgba(255, 159, 64, 1)'
                                 ],
                                 borderWidth: 0
-                            }]
-                        },
+
+                            },
+                            {
+                                label: 'Draft',
+                                data: defaultData_total,
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 206, 86, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)',
+                                    'rgba(153, 102, 255, 0.5)',
+                                    'rgba(255, 159, 64, 0.5)'
+                                ],
+                                borderColor: [
+                                    'rgba(255,99,132,0.1)',
+                                    'rgba(54, 162, 235, 0.1)',
+                                    'rgba(255, 206, 86, 0.1)',
+                                    'rgba(75, 192, 192, 0.1)',
+                                    'rgba(153, 102, 255, 0.1)',
+                                    'rgba(255, 159, 64, 0.1)'
+                                ],
+                                borderWidth: 1
+                            },
+                        ]},
+
                         options: {
                             scales: {
                                 yAxes: [{
+                                    stacked: true,
                                     ticks: {
-                                        beginAtZero:true
+                                        beginAtZero: true
+                                    }
+                                }],
+                                xAxes: [{
+                                    stacked: true,
+                                    ticks: {
+                                        beginAtZero: true
                                     }
                                 }]
                             }
                         }
                     });
                     // END OF SHOWING THE CHART HERE
-                    var ctx2 = document.getElementById("myChart2").getContext('2d');
                     var ctx2 = document.getElementById("myChart_pie").getContext('2d');
                     var myChart = new Chart(ctx2, {
                         type: 'pie',
@@ -405,11 +368,6 @@
     </script>    
 
 {% endblock %}
-
-{% block footer %}
-<p>thanks</p>
-{% endblock %}
-
 
 </body>
 

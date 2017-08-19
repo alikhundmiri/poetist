@@ -72,6 +72,13 @@
                 >
                     <a href="{% url 'login' %}">Login</a>
                 </li>
+                <li
+                {% if name_nav == 'register' %}
+                    class="active"
+                {% endif %}
+                >
+                    <a href="{% url 'register' %}">Register</a>
+                </li>
                 {% endif %}
 
             </ul>

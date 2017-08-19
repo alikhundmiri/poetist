@@ -52,47 +52,17 @@
                 <a href="{% url 'dashboard:list' %}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
             </li>
             <li class="{% if name == 'd_charts' %}active{% endif %}">
-                <a href="{% url 'dashboard:charts' %}"><i class="fa fa-fw fa-bar-chart-o"></i> Reports</a>
+                <a href="{% url 'dashboard:charts' %}"><i class="fa fa-fw fa-bar-chart-o"></i>Progress Reports</a>
             </li>
-            <li class="{% if name == 'd_tables' %}active{% endif %}">
-                <a href="{% url 'dashboard:tables' %}"><i class="fa fa-fw fa-table"></i> Tables</a>
+            <li class="{% if name == 'd_a_poem' %}active{% endif %}">
+                <a href="{% url 'dashboard:all_poem' %}"><i class="fa fa-fw fa-heart"></i> Poem</a>
             </li>
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#poems_"><i class="fa fa-fw fa-heart"></i> Poem <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="poems_" class="collapse">
-                    <li class="{% if name == 'd_n_poem' %}active{% endif %}">
-                        <a href="{% url 'dashboard:new_poem' %}"><i class="fa fa-fw fa-pencil"></i> New Poem</a>
-                    </li>
-                    <li class="{% if name == 'd_a_poem' %}active{% endif %}">
-                        <a href="{% url 'dashboard:all_poem' %}"><i class="fa fa-fw fa-list"></i> All Poems</a>
-                    </li>
-                </ul>
+            <li class="{% if name == 'd_a_story' %}active{% endif %}">
+                <a href="{% url 'dashboard:all_story' %}"><i class="fa fa-fw fa-pencil"></i> Story</a>
             </li>
-
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#stories_"><i class="fa fa-fw fa-quote-right"></i> Story <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="stories_" class="collapse">
-                    <li class="{% if name == 'd_n_story' %}active{% endif %}">
-                        <a href="{% url 'dashboard:new_story' %}"><i class="fa fa-fw fa-pencil"></i> New Story</a>
-                    </li>
-                    <li class="{% if name == 'd_a_story' %}active{% endif %}">
-                        <a href="{% url 'dashboard:all_story' %}"><i class="fa fa-fw fa-list"></i> All Stories</a>
-                    </li>
-                </ul>
+            <li class="{% if name == 'd_a_riddle' %}active{% endif %}">
+                <a href="{% url 'dashboard:all_riddle' %}"><i class="fa fa-fw fa-question-circle"></i> Riddle</a>
             </li>
-
-            <li>
-                <a href="javascript:;" data-toggle="collapse" data-target="#riddles_"><i class="fa fa-fw fa-question-circle"></i> Riddle <i class="fa fa-fw fa-caret-down"></i></a>
-                <ul id="riddles_" class="collapse">
-                    <li class="{% if name == 'd_n_riddle' %}active{% endif %}">
-                        <a href="{% url 'dashboard:new_riddle' %}"><i class="fa fa-fw fa-pencil"></i> New Riddle</a>
-                    </li>
-                    <li class="{% if name == 'd_a_riddle' %}active{% endif %}">
-                        <a href="{% url 'dashboard:all_riddle' %}"><i class="fa fa-fw fa-list"></i> All Riddles</a>
-                    </li>
-                </ul>
-            </li>
-
             <li>
                 <a href="{% url 'writer:list' %}"><i class="fa fa-fw fa-user"></i> Visit website</a>
             </li>
