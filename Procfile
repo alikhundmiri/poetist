@@ -1,2 +1,2 @@
-web: gunicorn danapages.wsgi --log-file -
+web: gunicorn poetist.wsgi --log-file -
 
