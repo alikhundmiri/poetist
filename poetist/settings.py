@@ -25,7 +25,14 @@ SECRET_KEY = '*)q8$ci#!6y7m+=v--n*36ns6#qr*vn99nvjidtmhfijl2n-vm'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0","192.168.1.36",]
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "192.168.1.36",
+    'https://stark-harbor-91981.herokuapp.com/', 
+    'stark-harbor-91981.herokuapp.com/',
+    'https://www.stark-harbor-91981.herokuapp.com/',
+    'www.stark-harbor-91981.herokuapp.com/'
+]
 
 
 # Application definition
